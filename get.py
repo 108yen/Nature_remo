@@ -1,6 +1,8 @@
 import requests
 import os
 import json
+import datetime
+from pytz import timezone
 import pprint
 from six.moves import configparser
 
@@ -20,7 +22,9 @@ def get():
 
     out=dict()
     for k,v in result[0]['newest_events'].items():
-        out[k]=v['val']
+        GMT=datetime.datetime.fromisoformat(v['created_at'].replace('Z', '+00:00'))
+        JST=GMT.astimezone(timezone('Asia/Tokyo'))
+        out[k]={'created_at':JST,'val':v['val']}
     # pprint.pprint(out)
 
     return out
