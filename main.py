@@ -9,8 +9,9 @@ def job():
     print("do job")
 
 def main():
-    schedule.every().hour.at(":00").do(job)
-    schedule.every().hour.at(":30").do(job)
+    # schedule.every().hour.at(":00").do(job)
+    # schedule.every().hour.at(":30").do(job)
+    schedule.every(10).minutes.do(job)
 
     while True:
         schedule.run_pending()
