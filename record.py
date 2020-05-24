@@ -43,7 +43,14 @@ def record(data):
 
     # print(datetime.datetime.today())
     for k,v in data.items():
-        cur.execute("INSERT INTO "+k+" VALUES (%(val)s,%(created_at)s)",v)
+        cur.execute("SELECT * FROM "+k+" ORDER BY created_at DESC LIMIT 1")
+        newest_data=cur.fetchall()
+        # print('newest_data:'+str(newest_data))
+        if newest_data == [] or not newest_data[0][1] == v['created_at'].replace(tzinfo=None):
+            print('record '+k)
+            # print('databese:'+str(newest_data[0][1]))
+            print('getdata:'+str(v['created_at'].replace(tzinfo=None)))
+            cur.execute("INSERT INTO "+k+" VALUES (%(val)s,%(created_at)s)",v)
     conn.commit()
 
     # DB操作が終わったらカーソルとコネクションを閉じる
