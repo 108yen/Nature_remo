@@ -18,14 +18,12 @@ def get():
     response = requests.get(url, headers=headers)
     result = json.loads(response.text)
 
-    # pprint.pprint(result[0]['newest_events'])
 
     out=dict()
     for k,v in result[0]['newest_events'].items():
         GMT=datetime.datetime.fromisoformat(v['created_at'].replace('Z', '+00:00'))
         JST=GMT.astimezone(timezone('Asia/Tokyo'))
         out[k]={'created_at':JST,'val':v['val']}
-    # pprint.pprint(out)
 
     return out
 
