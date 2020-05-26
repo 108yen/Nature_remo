@@ -31,7 +31,7 @@ def record(data):
     if not ('mo',) in tables:
         cur.execute("CREATE TABLE mo (val int, created_at datetime)")
     if not ('te',) in tables:
-        cur.execute("CREATE TABLE te (val int, created_at datetime)")
+        cur.execute("CREATE TABLE te (val float, created_at datetime)")
     conn.commit()
 
     for k,v in data.items():
